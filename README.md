@@ -38,6 +38,6 @@ Automatizar el saludo de cumpleaños a empleados de forma personalizada y progra
 
 ## 👨‍💻 Autor
 
-Lucas – Automatización aplicada a RRHH · Ciencia de Datos
+Lucas G Villalba – Automatización aplicada a RRHH · Ciencia de Datos
 
 
