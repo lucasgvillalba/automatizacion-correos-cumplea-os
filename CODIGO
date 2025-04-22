@@ -1,0 +1,39 @@
+function enviarFelicitaciones() {
+  const hoja = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const datos = hoja.getDataRange().getValues();
+  const hoy = Utilities.formatDate(new Date(), "GMT-3", "dd/MM"); // Zona horaria Argentina
+
+  for (let i = 1; i < datos.length; i++) {
+    const nombre = datos[i][0];
+    const apellido = datos[i][1];
+    const email = datos[i][2];
+    const fecha = Utilities.formatDate(new Date(datos[i][3]), "GMT-3", "dd/MM");
+    const enviado = datos[i][4]; // Columna "Enviado"
+
+    if (hoy === fecha && enviado !== "✓") {
+      MailApp.sendEmail({
+        to: email,
+        subject: "¡Feliz cumpleaños! 🎂🎉",
+        htmlBody: `
+          <p>¡Hola ${nombre}!</p>
+          <p>Desde el equipo de Desarrollo Humano queremos desearte un muy feliz cumpleaños 🎈🥳🎊</p>
+          <p>Que tengas un gran día ✨</p>
+          <img src="https://i.postimg.cc/hvM3pTmY/Modelo-def-Cumplea-os-2025-1-1.png" width="500">
+        `
+      });
+
+      hoja.getRange(i + 1, 5).setValue("✓");
+    }
+  }
+}
+
+function reiniciarEnvios() {
+  const hoja = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const datos = hoja.getDataRange().getValues();
+
+  for (let i = 1; i < datos.length; i++) {
+    hoja.getRange(i + 1, 5).setValue(""); // Limpiar columna "Enviado"
+  }
+
+  SpreadsheetApp.getUi().alert("¡Se reinició el seguimiento de envíos para el nuevo año!");
+}
